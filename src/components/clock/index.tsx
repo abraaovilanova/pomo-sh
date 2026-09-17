@@ -4,30 +4,59 @@ import ClockDisplay from './ClockDisplay'
 import "./Clock.css"
 
 
-const formattPlayBtn = (play : boolean):String => play ? 'Stop' : 'Play'
+const formattPlayBtn = (play: boolean): String => play ? 'Stop' : 'Play'
+
+type DisplayStateType = 'pomodoro' | 'short-break' | 'long-break'
+const displayStateList: DisplayStateType[] = ['pomodoro', 'short-break', 'long-break']
+const totalTimePerState: number[] = [25 * 60, 5 * 60, 15 * 60]
 
 function Clook() {
-    const [seconds, setSeconds] = useState<number>(25 * 60)
     const [play, setPlay] = useState<boolean>(false)
+    const [displayState, setDisplayState] = useState<DisplayStateType>('pomodoro')
+    const [displayStateIndex, setDisplayStateIndex] = useState<number>(0)
+    const [seconds, setSeconds] = useState<number>(totalTimePerState[displayStateIndex])
 
     useEffect(() => {
+        let timeout: NodeJS.Timeout
         if (play) {
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 setSeconds(prev => prev - 1)
             }, 1000)
         }
-    }, [seconds, play])
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [seconds, play, displayStateIndex])
+
+    useEffect(() => {
+        setSeconds(totalTimePerState[displayStateIndex])
+    }, [displayStateIndex])
+
     return (
         <div className="clock-container">
             <NavbarList>
                 <NavbarListItens>
-                    <button>pomodoro</button>
+                    <button onClick={() => {
+                        if (displayStateIndex < displayStateList.length - 1) {
+                            setDisplayStateIndex(0)
+                            setSeconds(totalTimePerState[displayStateIndex])
+                        }
+                    }}>pomodoro</button>
                 </NavbarListItens>
                 <NavbarListItens>
-                    <button>short break</button>
+                    <button onClick={() => {
+                        if (displayStateIndex < displayStateList.length - 1) {
+                            setDisplayStateIndex(1)
+                        }
+                    }}>short break</button>
                 </NavbarListItens>
                 <NavbarListItens>
-                    <button>long break</button>
+                    <button onClick={() => {
+                        if (displayStateIndex < displayStateList.length - 1) {
+                            setDisplayStateIndex(2)
+                        }
+                    }}>long break</button>
                 </NavbarListItens>
             </NavbarList>
             <ClockDisplay totalSeconds={seconds} />
@@ -39,11 +68,18 @@ function Clook() {
                 </NavbarListItens>
                 <NavbarListItens>
                     <button onClick={() => {
-                        setSeconds(25 * 60)
+                        setSeconds(totalTimePerState[displayStateIndex])
                     }}>Reset</button>
                 </NavbarListItens>
                 <NavbarListItens>
-                    <button>SKIP</button>
+                    <button onClick={() => {
+                        console.log(seconds)
+                        if (displayStateIndex < displayStateList.length - 1) {
+                            setDisplayStateIndex(prev => prev + 1)
+                        } else {
+                            setDisplayStateIndex(0)
+                        }
+                    }}>SKIP</button>
                 </NavbarListItens>
             </NavbarList>
         </div>
