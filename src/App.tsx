@@ -14,8 +14,8 @@ function App() {
           <h1>./pomo.sh</h1>
         </div>
           <NavbarList>
-            <NavbarListItens>Config</NavbarListItens>
             <NavbarListItens>Report</NavbarListItens>
+            <NavbarListItens>Config</NavbarListItens>
             <NavbarListItens>Login</NavbarListItens>
           </NavbarList>
       </Header>

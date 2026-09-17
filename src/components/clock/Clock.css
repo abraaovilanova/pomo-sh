@@ -1,9 +1,8 @@
 .clock-container{
-    border: 1px solid rgb(21, 255, 0);
+    border: 1px solid red;
 }
 
 .clock-display{
-    border: 1px solid rgb(21, 255, 0);
     height: 10rem;
     display: flex;
     flex-direction: column;

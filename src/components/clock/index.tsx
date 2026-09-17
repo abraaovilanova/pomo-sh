@@ -1,8 +1,22 @@
+import { useState, useEffect } from 'react'
 import { NavbarList, NavbarListItens } from "../navbarlist"
 import ClockDisplay from './ClockDisplay'
 import "./Clock.css"
 
+
+const formattPlayBtn = (play : boolean):String => play ? 'Stop' : 'Play'
+
 function Clook() {
+    const [seconds, setSeconds] = useState<number>(25 * 60)
+    const [play, setPlay] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (play) {
+            setTimeout(() => {
+                setSeconds(prev => prev - 1)
+            }, 1000)
+        }
+    }, [seconds, play])
     return (
         <div className="clock-container">
             <NavbarList>
@@ -16,13 +30,17 @@ function Clook() {
                     <button>long break</button>
                 </NavbarListItens>
             </NavbarList>
-            <ClockDisplay />
+            <ClockDisplay totalSeconds={seconds} />
             <NavbarList>
                 <NavbarListItens>
-                    <button>START / STOP</button>
+                    <button onClick={() => {
+                        setPlay(prev => !prev)
+                    }}>{formattPlayBtn(play)}</button>
                 </NavbarListItens>
                 <NavbarListItens>
-                    <button>RESET</button>
+                    <button onClick={() => {
+                        setSeconds(25 * 60)
+                    }}>Reset</button>
                 </NavbarListItens>
                 <NavbarListItens>
                     <button>SKIP</button>
