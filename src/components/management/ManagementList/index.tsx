@@ -6,8 +6,7 @@ type Props = {
 function ManagementList({children}:Props){
     return (
         <ul>
-            <li>teste</li>
-            <li>teste2</li>
+            {children}
         </ul>
     )
 }

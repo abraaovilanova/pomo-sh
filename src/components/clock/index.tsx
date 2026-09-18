@@ -38,24 +38,23 @@ function Clook() {
             <NavbarList>
                 <NavbarListItens>
                     <button onClick={() => {
-                        if (displayStateIndex < displayStateList.length - 1) {
-                            setDisplayStateIndex(0)
-                            setSeconds(totalTimePerState[displayStateIndex])
-                        }
+
+                        setDisplayStateIndex(0)
+                        setSeconds(totalTimePerState[displayStateIndex])
+
                     }}>pomodoro</button>
                 </NavbarListItens>
                 <NavbarListItens>
                     <button onClick={() => {
-                        if (displayStateIndex < displayStateList.length - 1) {
                             setDisplayStateIndex(1)
-                        }
+                            setSeconds(totalTimePerState[1])
+                        
                     }}>short break</button>
                 </NavbarListItens>
                 <NavbarListItens>
                     <button onClick={() => {
-                        if (displayStateIndex < displayStateList.length - 1) {
-                            setDisplayStateIndex(2)
-                        }
+                            setDisplayStateIndex(1)
+                            setSeconds(totalTimePerState[2])
                     }}>long break</button>
                 </NavbarListItens>
             </NavbarList>
@@ -79,7 +78,7 @@ function Clook() {
                         } else {
                             setDisplayStateIndex(0)
                         }
-                    }}>SKIP</button>
+                    }}>Skip</button>
                 </NavbarListItens>
             </NavbarList>
         </div>
